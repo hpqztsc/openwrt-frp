@@ -49,7 +49,20 @@ fi
 cd "$dir"
 
 file "$sdk_dir/$sdk_file"
-zstd -d "$sdk_dir/$sdk_file" -c | tar -xf - -C "$sdk_home_dir" --strip=1
+case "$sdk_file" in
+  *.tar.xz)
+    # 使用 tar + xz 解压
+    tar -Jxf "$sdk_dir/$sdk_file" -C "$sdk_home_dir" --strip=1
+    ;;
+  *.tar.zst)
+    # 使用 zstd 解压
+    zstd -d "$sdk_dir/$sdk_file" -c | tar -xf - -C "$sdk_home_dir" --strip=1
+    ;;
+  *)
+    echo "Unsupported archive format: $sdk_file"
+    exit 1
+    ;;
+esac
 
 cd "$sdk_home_dir"
 
