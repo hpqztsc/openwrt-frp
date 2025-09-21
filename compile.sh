@@ -101,7 +101,7 @@ ln -sf "$dir" "package/$package_name"
 ./scripts/feeds install -a > /dev/null 2>&1
 
 make defconfig > /dev/null 2>&1
-
+cat Makefile
 make package/${package_name}/clean  > /dev/null 2>&1
 make package/${package_name}/compile IPKG_BUILD=1 #V=s
 
