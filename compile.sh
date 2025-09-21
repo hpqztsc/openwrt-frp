@@ -82,7 +82,7 @@ sed -i \
 	-e 's#git.openwrt.org/feed/telephony#github.com/openwrt/telephony#' \
 	feeds.conf
 
-./scripts/feeds update -a
+./scripts/feeds update -a > /dev/null 2>&1
 
 ( test -d "feeds/packages/net/$package_name" && \
 	rm -rf "feeds/packages/net/$package_name" ) || true
@@ -98,9 +98,9 @@ fi
 
 ln -sf "$dir" "package/$package_name"
 
-./scripts/feeds install -a
+./scripts/feeds install -a > /dev/null 2>&1
 
-make defconfig
+make defconfig > /dev/null 2>&1
 
 make package/${package_name}/clean
 make package/${package_name}/compile #V=s
