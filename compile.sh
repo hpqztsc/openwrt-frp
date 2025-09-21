@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2021 Xingwang Liao
 #
-
+set -x
 dir="$(cd "$(dirname "$0")" ; pwd)"
 
 package_name="frp"
@@ -103,10 +103,11 @@ ln -sf "$dir" "package/$package_name"
 make defconfig
 
 make package/${package_name}/clean
-make package/${package_name}/compile V=s
+make package/${package_name}/compile #V=s
 
 cd "$dir"
 
 find "$sdk_home_dir/bin/" -type f -exec ls -lh {} \;
 
 find "$sdk_home_dir/bin/" -type f -name "${package_name}*.ipk" -exec cp -f {} "$dir" \;
+set +x
