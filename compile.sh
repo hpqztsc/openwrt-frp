@@ -4,7 +4,7 @@
 #
 set -x
 dir="$(cd "$(dirname "$0")" ; pwd)"
-
+ls -ltha
 package_name="frp"
 golang_commit="$OPENWRT_GOLANG_COMMIT"
 
@@ -28,7 +28,7 @@ test -d "$dl_dir" || mkdir -p "$dl_dir"
 test -d "$feeds_dir" || mkdir -p "$feeds_dir"
 
 cd "$sdk_dir"
-
+ls -ltha
 if ! ( wget -q -O - "$sdk_url_path/sha256sums" | \
 	grep -- "$sdk_name" > sha256sums.small 2>/dev/null ) ; then
 	echo "Can not find ${sdk_name} file in sha256sums."
@@ -45,9 +45,9 @@ if ! sha256sum -c ./sha256sums.small >/dev/null 2>&1 ; then
 		exit 1
 	fi
 fi
-
+ls -ltha
 cd "$dir"
-
+ls -ltha
 file "$sdk_dir/$sdk_file"
 case "$sdk_file" in
   *.tar.xz)
@@ -63,9 +63,9 @@ case "$sdk_file" in
     exit 1
     ;;
 esac
-
+ls -ltha
 cd "$sdk_home_dir"
-
+ls -ltha
 ( test -d "dl" && rm -rf "dl" ) || true
 ( test -d "feeds" && rm -rf "feeds" ) || true
 
@@ -81,7 +81,7 @@ sed -i \
 	-e 's#git.openwrt.org/project/luci#github.com/openwrt/luci#' \
 	-e 's#git.openwrt.org/feed/telephony#github.com/openwrt/telephony#' \
 	feeds.conf
-
+ls -ltha
 ./scripts/feeds update -a > /dev/null 2>&1
 
 ( test -d "feeds/packages/net/$package_name" && \
